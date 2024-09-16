@@ -7,46 +7,55 @@
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
   <body class="p-5 flex flex-col items-center">
-    <div class="mb-5">
-      <button
-        class="px-5 py-2 rounded bg-orange-500 text-white hover:opacity-90 active:scale-90 transition-all"
-        id="reset-btn"
-      >
-        Reset
-      </button>
-      <button
-        class="px-5 py-2 rounded bg-orange-500 text-white hover:opacity-90 active:scale-90 transition-all hidden"
-        id="pause-btn"
-      >
-        Pause
-      </button>
-      <button
-        class="px-5 py-2 rounded bg-orange-500 text-white hover:opacity-90 active:scale-90 transition-all"
-        id="start-btn"
-      >
-        Start
-      </button>
-    </div>
-
-    <div class="mb-4">
-      <div>Status: <span id="status"></span></div>
-      <div>Number of iterations: <span id="iterations-number"></span></div>
-      <div>Shortest path: <span id="shortest-path"></span></div>
-      <div>Shortest distance: <span id="shortest-distance"></span></div>
-    </div>
-
     <div>
-      <small
-        >Click on the canvas in order to add a point. Add at least 3 points to
-        start.</small
-      >
+      <div class="mb-5">
+        <h1 class="text-center text-2xl font-bold mb-4">
+          Ant Colony Optimization
+        </h1>
+        <button
+          class="px-5 py-2 rounded bg-orange-500 text-white hover:opacity-90 active:scale-90 transition-all"
+          id="reset-btn"
+        >
+          Reset
+        </button>
+        <button
+          class="px-5 py-2 rounded bg-orange-500 text-white hover:opacity-90 active:scale-90 transition-all hidden"
+          id="pause-btn"
+        >
+          Pause
+        </button>
+        <button
+          class="px-5 py-2 rounded bg-orange-500 text-white hover:opacity-90 active:scale-90 transition-all"
+          id="start-btn"
+        >
+          Start
+        </button>
+      </div>
+
+      <div class="mb-4">
+        <div><b>Status</b>: <span id="status"></span></div>
+        <div>
+          <b>Number of iterations</b>: <span id="iterations-number"></span>
+        </div>
+        <div><b>Shortest path</b>: <span id="shortest-path"></span></div>
+        <div>
+          <b>Shortest distance</b>: <span id="shortest-distance"></span>
+        </div>
+      </div>
+
+      <div class="text-center">
+        <small
+          >Click on the canvas in order to add a point. Add at least 3 points to
+          start.</small
+        >
+      </div>
+      <canvas
+        id="canvas"
+        width="700"
+        height="700"
+        class="border border-slate-600 mx-auto"
+      ></canvas>
     </div>
-    <canvas
-      id="canvas"
-      width="700"
-      height="700"
-      class="border border-slate-600"
-    ></canvas>
     <script src="./index.js" type="module"></script>
   </body>
 </html>

@@ -12,7 +12,7 @@ const numberOfIterationsEl = document.getElementById("iterations-number");
 const statusEl = document.getElementById("status");
 
 canvasEl.addEventListener("click", onCanvasClick);
-startBtn.addEventListener("click", run);
+startBtn.addEventListener("click", start);
 pauseBtn.addEventListener("click", pause);
 resetBtn.addEventListener("click", reset);
 
@@ -34,12 +34,12 @@ function onCanvasClick(event) {
   rerender()
 }
 
-function run() {
+function start() {
   if (graph.cities.length < 3) return;
 
   if (isStarted && isPaused) {
     isPaused = false;
-    startIteration();
+    iterate();
     toggleButtonClasses();
     return;
   }
@@ -47,7 +47,7 @@ function run() {
   isStarted = true;
   algorithm = new ACOAlgorithm(graph);
 
-  startIteration();
+  iterate();
   toggleButtonClasses();
 }
 
@@ -70,16 +70,15 @@ function reset() {
   toggleButtonClasses();
 }
 
-function startIteration() {
+function iterate() {
   if(algorithm.isFinished) {
     toggleButtonClasses();
     return;
   };
 
   algorithm.iterate();
-
   rerender();
-  requestAnimationFrameId = requestAnimationFrame(startIteration);
+  requestAnimationFrameId = requestAnimationFrame(iterate);
 }
 
 function rerender() {
@@ -87,7 +86,7 @@ function rerender() {
 
   shortestPathEl.innerHTML = algorithm?.shortest_path?.map(city => city.id).join(" -> ") || "N/A";
   shortestDistanceEl.innerHTML = Math.round(algorithm?.shortest_distance || Infinity);
-  numberOfIterationsEl.innerHTML = `${algorithm?.iterations || 0} (w/o change: ${algorithm?.iterationsWithoutChange || 0})`;
+  numberOfIterationsEl.innerHTML = algorithm?.iterations || 0;
   statusEl.innerHTML = getCurrentStatus();
 }
 
