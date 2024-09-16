@@ -15,7 +15,7 @@ class Canvas {
   #drawNode(x, y, label) {
     // Draw a circle
     this.#ctx.beginPath();
-    this.#ctx.lineWidth = 3;
+    this.#ctx.lineWidth = 5;
     this.#ctx.strokeStyle = "orange";
     this.#ctx.fillStyle = "#fff";
     this.#ctx.arc(x, y, 15, 0, Math.PI * 2);
@@ -52,10 +52,10 @@ class Canvas {
   redrawGraph(pheromoneMatrix, shortestPath = []) {
     this.#ctx.clearRect(0, 0, this.#root.width, this.#root.height);
 
-
     const allPheromoneValues = Object.values(pheromoneMatrix?.matrix || {});
-    const minValue = Math.min(...allPheromoneValues);
-    const maxValue = Math.max(...allPheromoneValues);
+    const pheromonesExist = allPheromoneValues.length > 0;
+    const minPheromone = Math.min(...allPheromoneValues);
+    const maxPheromone = Math.max(...allPheromoneValues);
 
     const { cities } = this.#graph;
   
@@ -66,7 +66,7 @@ class Canvas {
         const toCity = cities[j];
         const distance = this.#graph.getDistance(fromCity, toCity);
         const pheromone = pheromoneMatrix?.getPheromone(fromCity, toCity) || 1;
-        const lineWidth = pheromoneMatrix?.matrix ? this.calculateLineWidth(minValue, maxValue, pheromone) : LINE_MIN_WIDTH;
+        const lineWidth = pheromonesExist ? this.calculateLineWidth(minPheromone, maxPheromone, pheromone) : LINE_MIN_WIDTH;
 
         this.#drawEdge(fromCity.x, fromCity.y, toCity.x, toCity.y, distance, pheromone, lineWidth);
       }
@@ -78,7 +78,7 @@ class Canvas {
       const nextCity = shortestPath[i + 1];
       const distance = this.#graph.getDistance(city, nextCity);
       const pheromone = pheromoneMatrix?.getPheromone(city, nextCity) || 1;
-      const lineWidth = pheromoneMatrix?.matrix ? this.calculateLineWidth(minValue, maxValue, pheromone) : LINE_MIN_WIDTH;
+      const lineWidth = pheromonesExist ? this.calculateLineWidth(minPheromone, maxPheromone, pheromone) : LINE_MIN_WIDTH;
 
       this.#drawEdge(city.x, city.y, nextCity.x, nextCity.y, distance, pheromone, lineWidth, true);
     }
